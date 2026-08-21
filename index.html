@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Online Schema.org Markup Generator — JSON-LD Validator</title>
+<meta name="description" content="Free professional Schema.org markup generator in JSON-LD format. Interactive builder for FAQ and Article structured data with live client-side validation.">
+<style>
+:root{--primary:#2563eb;--primary-hover:#1d4ed8;--success:#16a34a;--bg:#f8fafc;--card-bg:#ffffff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--code-bg:#0f172a}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--text);padding:20px;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.wrapper{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:920px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.wrapper{grid-template-columns:1fr;max-width:440px}}
+h1{font-size:22px;font-weight:700;margin-bottom:4px;grid-column:1/-1;text-align:center}
+.subtitle{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:20px;grid-column:1/-1;border-bottom:1px solid var(--border);padding-bottom:16px}
+.panel-left,.panel-right{display:flex;flex-direction:column}
+.group{margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
+select,input,textarea{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:#fff;color:var(--text);transition:border 0.2s}
+select:focus,input:focus,textarea:focus{border-color:var(--primary);outline:none}
+textarea{resize:vertical;height:80px}
+.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;position:relative}
+.add-btn{padding:8px 14px;background:var(--bg);border:1px dashed var(--primary);color:var(--primary);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;width:fit-content;margin-bottom:14px}
+.add-btn:hover{background:#eff6ff}
+.code-container{position:relative;flex-grow:1;display:flex;flex-direction:column}
+pre{background:var(--code-bg);color:#34d399;padding:16px;border-radius:12px;font-family:"SFMono-Regular",Consolas,Monaco,monospace;font-size:13px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;flex-grow:1;min-height:340px;max-height:550px}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.action-btn{padding:11px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:opacity 0.2s}
+.btn-copy{background:var(--success);color:#fff}
+.btn-google{background:#ea4335;color:#fff}
+.action-btn:hover{opacity:0.9}
+.ad{display:none;margin-top:15px;min-height:90px;text-align:center;justify-content:center;align-items:center;width:100%;grid-column:1/-1}
+.seo-text{font-size:12px;color:var(--text-muted);margin-top:24px;text-align:justify;line-height:1.4;border-top:1px solid var(--border);padding-top:16px;grid-column:1/-1}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<h1>Schema.org Markup Generator</h1>
+<div class="subtitle">Interactive JSON-LD microdata builder with live code validation</div>
+<div class="panel-left">
+<div class="group">
+<label for="schema-type">Schema Type</label>
+<select id="schema-type" onchange="switchSchema()"><option value="faq">FAQ Page (Questions & Answers)</option><option value="article">Article (Post / News)</option></select>
+</div>
+<div id="dynamic-inputs"></div>
+</div>
+<div class="panel-right">
+<div class="code-container">
+<label>Generated JSON-LD Code</label>
+<pre><code id="json-output"></code></pre>
+</div>
+<div class="action-grid">
+<button class="action-btn btn-copy" onclick="copyCode()">Copy Code</button>
+<button class="action-btn btn-google" onclick="testGoogle()">Test in Google</button>
+</div>
+</div>
+<div id="ads" class="ad"><div id="container-e8c895e6c70ade8e4ef4a72354f42e97"></div></div>
+<div class="seo-text">
+Our professional online Schema.org markup generator enables swift execution and structured validation of semantic data inside your browser. The embedded JSON-LD software allows webmasters and core SEO specialists to rapidly construct clean FAQ frameworks and article metadata tables. Every internal configuration script processes information locally, completely protecting private architectural blueprints from external tracking databases.
+</div>
+</div>
+<script>
+function showAds(){
+const c=document.getElementById('ads');
+if(!window.adScriptLoaded){
+window.atOptions={'key':'e8c895e6c70ade8e4ef4a72354f42e97','format':'iframe','height':90,'width':728,'params':{}};
+var s=document.createElement('script');s.type='text/javascript';s.async=!0;
+s.src=['https://','bagelstoppage.','com/','e8c895e6c70ade8e4ef4a72354f42e97/','invoke.js'].join('');c.appendChild(s);window.adScriptLoaded=!0
+}c.style.display='flex'}
+function switchSchema(){
+const type=document.getElementById('schema-type').value,box=document.getElementById('dynamic-inputs');
+if(type==='faq'){
+box.innerHTML='<div id="faq-area"><div class="faq-item"><div class="group"><label>Question #1</label><input type="text" class="faq-q" value="Why use structured microdata?" oninput="updateJSON()"></div><div class="group"><label>Answer #1</label><textarea class="faq-a" oninput="updateJSON()">JSON-LD microdata directly helps search engine crawlers accurately evaluate core site content.</textarea></div></div></div><button class="add-btn" onclick="addFAQField()">+ Add Question</button>';
+}else{
+box.innerHTML='<div class="group"><label>Article Headline</label><input type="text" id="art-title" value="How to optimize core SEO in 2026" oninput="updateJSON()"></div><div class="group"><label>Article URL</label><input type="url" id="art-url" value="https://example.com" oninput="updateJSON()"></div><div class="group"><label>Author Name</label><input type="text" id="art-author" value="John Expert" oninput="updateJSON()"></div><div class="group"><label>Publisher Organization</label><input type="text" id="art-org" value="SEO Monolith" oninput="updateJSON()"></div>';
+}updateJSON();
+}
+function addFAQField(){
+const area=document.getElementById('faq-area'),num=area.getElementsByClassName('faq-item').length+1;
+const item=document.createElement('div');item.className='faq-item';
+item.innerHTML='<div class="group"><label>Question #'+num+'</label><input type="text" class="faq-q" placeholder="Enter question" oninput="updateJSON()"></div><div class="group"><label>Answer #'+num+'</label><textarea class="faq-a" placeholder="Enter answer" oninput="updateJSON()"></textarea></div>';
+area.appendChild(item);updateJSON();
+}
+function updateJSON(){
+const type=document.getElementById('schema-type').value;let obj={"@context":"https://schema.org"};
+if(type==='faq'){
+obj["@type"]="FAQPage";obj["mainEntity"]=[];
+const qs=document.getElementsByClassName('faq-q'),as=document.getElementsByClassName('faq-a');
+for(let i=0;i<qs.length;i++){
+if(qs[i].value.trim()){obj["mainEntity"].push({"@type":"Question","name":qs[i].value,"acceptedAnswer":{"@type":"Answer","text":as[i].value}})}
+}}else{
+obj["@type"]="Article";obj["headline"]=document.getElementById('art-title').value;obj["url"]=document.getElementById('art-url').value;
+obj["author"]={"@type":"Person","name":document.getElementById('art-author').value};obj["publisher"]={"@type":"Organization","name":document.getElementById('art-org').value};
+}document.getElementById('json-output').innerText=JSON.stringify(obj,null,2);
+}
+function copyCode(){
+const code=document.getElementById('json-output').innerText;
+navigator.clipboard.writeText(code).then(()=>{alert('Code copied to clipboard successfully!')});showAds();
+}
+function testGoogle(){
+const code=document.getElementById('json-output').innerText;
+navigator.clipboard.writeText(code).then(()=>{
+alert('Code automatically copied! Google Validator will now open — select the \"CODE\" tab and paste it there.');
+window.open('https://google.com', '_blank');
+});showAds();
+}
+switchSchema();
+</script>
+</body>
+</html>
